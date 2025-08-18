@@ -24,6 +24,7 @@ kube-system       Active   3m55s
 
 Create a ConfigMap file:
 
+```
 # configmap.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -33,12 +34,12 @@ metadata:
 data:
   APP_COLOR: "blue"
   APP_MESSAGE: "Hello from Day2 Lab"
-
+```
+```
 kubectl apply -f configmap.yaml
-
-
-Use it inside a Deployment:
-
+```
+2. Use it inside a Deployment:
+```
 # deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -63,111 +64,21 @@ spec:
         envFrom:
         - configMapRef:
             name: app-config
-
+```
+```
 kubectl apply -f deployment.yaml
 kubectl get pods -n day2-lab
-
+```
 3️⃣ Create a Secret
+```
 kubectl create secret generic db-secret \
   --from-literal=DB_USER=admin \
   --from-literal=DB_PASS=Passw0rd \
   -n day2-lab
 
-
+```
 Verify:
-
+```
 kubectl get secrets -n day2-lab
 kubectl describe secret db-secret -n day2-lab
-
-
-Mount into Pod (add to deployment.yaml):
-
-env:
-- name: DB_USER
-  valueFrom:
-    secretKeyRef:
-      name: db-secret
-      key: DB_USER
-- name: DB_PASS
-  valueFrom:
-    secretKeyRef:
-      name: db-secret
-      key: DB_PASS
-
-4️⃣ Add Liveness & Readiness Probes
-
-Edit Deployment:
-
-livenessProbe:
-  httpGet:
-    path: /
-    port: 80
-  initialDelaySeconds: 10
-  periodSeconds: 5
-
-readinessProbe:
-  httpGet:
-    path: /
-    port: 80
-  initialDelaySeconds: 5
-  periodSeconds: 5
-
-
-Apply changes:
-
-kubectl apply -f deployment.yaml
-kubectl describe pod <pod-name> -n day2-lab
-
-5️⃣ Expose with Service
-kubectl expose deployment webapp \
-  --type=NodePort \
-  --port=80 \
-  -n day2-lab
-
-
-Check:
-
-kubectl get svc -n day2-lab
-
-
-Access app via <NodeIP>:<NodePort>.
-
-6️⃣ Horizontal Pod Autoscaling (HPA)
-
-Enable metrics-server first (if not installed).
-
-Then:
-
-kubectl autoscale deployment webapp \
-  --cpu-percent=50 \
-  --min=2 \
-  --max=5 \
-  -n day2-lab
-
-
-Check HPA:
-
-kubectl get hpa -n day2-lab
-
-
-Generate load (optional with busybox):
-
-kubectl run -i --tty load-generator --image=busybox --restart=Never -- /bin/sh
-# Inside pod
-while true; do wget -q -O- http://webapp.day2-lab.svc.cluster.local; done
-
-7️⃣ Clean Up
-kubectl delete namespace day2-lab
-
-
-✅ By the end of Day 2, you’ll know:
-
-Namespaces
-
-ConfigMaps & Secrets
-
-Liveness & Readiness Probes
-
-Service exposure
-
-Horizontal Pod Autoscaling (HPA)
+```
