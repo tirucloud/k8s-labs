@@ -36,9 +36,20 @@ newpods-r5tdw   1/1     Running   1 (6m48s ago)   23m   10.42.0.9    controlplan
 newpods-l5pwx   1/1     Running   1 (6m48s ago)   23m   10.42.0.11   controlplane   <none>           <none>
 ```
 
-
-
-
+### Q6: We just created a new pod named webapp. How many containers are part of the webapp pod? Note: Ignore the state of the pod for now.
+```
+kubectl get pod webapp -o jsonpath='{.spec.containers[*].name}' | wc -w
+```
+### Q7: What images are used in the new webapp pod? You must look at all the pods in detail to figure this out.
+```
+controlplane ~ ➜  kubectl get pod webapp -o jsonpath='{.spec.containers[*].image}'
+```
+### Q8: What is the state of the container agentx in the pod webapp? Wait for it to finish the ContainerCreating state
+```
+kubectl describe pod webapp | grep -A5 "agentx"
+```
+### Q9: Why do you think the container agentx in pod webapp is in error? Try to figure it out from the events section of the pod.
+```
 
 
 
