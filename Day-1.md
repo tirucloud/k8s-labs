@@ -30,6 +30,7 @@ nginx-pod       1/1     Running   0          11m
 ```
 ### Q4: Which image is specified for the pods whose names begin with the newpods- prefix? You must look at one of the new pods in detail to figure this out.
 ```
+kubectl describe pod newpods-nglk8 | grep image
 kubectl get pods | grep ^newpods- | awk '{print $1}' | xargs -I {} kubectl get pod {} -o jsonpath='{.metadata.name} {.spec.containers[*].image}{"\n"}'
 kubectl get pod newpods-r5tdw -o jsonpath='{.spec.containers[*].image}'
 ```
