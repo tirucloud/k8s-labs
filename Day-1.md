@@ -54,7 +54,44 @@ kubectl get pod webapp -o jsonpath='{.spec.containers[*].image}'
 kubectl describe pod webapp | grep -A5 "agentx"
 ```
 ### Q9: Why do you think the container agentx in pod webapp is in error? Try to figure it out from the events section of the pod.
-
-
-
+```docker no access
+```
+### Q10: What does the READY column in the output of the kubectl get pods command indicate?
+```
+READY = <number_of_ready_containers>/<total_containers_in_pod>
+```
+### Q11: Delete the webapp Pod. Once deleted, wait for the pod to fully terminate.
+```
+kubectl delete pod webapp
+```
+### Q12: Create a new pod with the name redis and the image redis123. Use a pod-definition YAML file. And yes the image name is wrong!
+```
+vi redis-pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+  - name: redis
+    image: redis123
+```
+```
+k apply -f redis-pod.yml
+```
+### Q13: Now change the image on this pod to redis. Once done, the pod should be in a running state.
+```
+vi redis-pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+  - name: redis
+    image: redis
+```
+```
+k apply -f redis-pod.yml
+```
 
