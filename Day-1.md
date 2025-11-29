@@ -15,8 +15,8 @@ nginx-pod       1/1     Running   0          16s
 ```
 🔍 Difference
 Command	Purpose	When to use
-kubectl run	Quickly create a pod (imperative command)	Testing, simple pods
-kubectl create	Create resources from files or specific types like deployment, configmap, etc.	Production objects, structured YAML
+kubectl run	Quickly create a pod (imperative command)	                                                          Testing, simple pods
+kubectl create	Create resources from files or specific types like deployment, configmap, etc.	                Production objects, structured YAML
 ```
 ### Q3: How many pods are created now?
 ### Note: We have created a few more pods. So please check again in the current(default) namespace.
