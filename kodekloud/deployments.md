@@ -102,4 +102,9 @@ spec:
         - containerPort: 80
 ```
 
-
+```
+kubectl apply -f deployment.yaml
+kubectl get deployments
+kubectl get pods -o wide
+kubectl describe deployment httpd-frontend
+```
