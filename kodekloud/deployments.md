@@ -51,7 +51,7 @@ kubectl describe  deployment frontend-deployment | grep Image
 image not exist
 ```
 ### Q10: Create a new Deployment using the deployment-definition-1.yaml file located at /root/. There is an issue with the file, so try to fix it. 
----
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -74,6 +74,32 @@ spec:
         - "-c"
         - echo Hello Kubernetes! && sleep 3600
 ```
-### 
+### Q11: Create a new Deployment with the below attributes using your own deployment definition file.
+```
+Name: httpd-frontend;
+Replicas: 3;
+Image: httpd:2.4-alpine 
+```
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: httpd-frontend
+  template:
+    metadata:
+      labels:
+        app: httpd-frontend
+    spec:
+      containers:
+      - name: httpd-container
+        image: httpd:2.4-alpine
+        ports:
+        - containerPort: 80
+```
 
 
