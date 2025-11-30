@@ -97,7 +97,7 @@ spec:
     spec:
       containers:
       - name: httpd-container
-        image: httpd:2.4-alpine
+        image: httpd:alpine3.22
         ports:
         - containerPort: 80
 ```
