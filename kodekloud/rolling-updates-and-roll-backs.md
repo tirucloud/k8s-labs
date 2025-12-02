@@ -72,6 +72,27 @@ Strategy: Recreate
 
 ```
 ```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: httpd-frontend
+  template:
+    metadata:
+      labels:
+        app: httpd-frontend
+    spec:
+      containers:
+      - name: httpd-container
+        image: httpd:2.4-alpine
+        ports:
+        - containerPort: 80
+```
+```
 kubectl describe deployment frontend | grep Strategy
 StrategyType:       Recreate
 ```
