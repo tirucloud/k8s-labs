@@ -74,7 +74,7 @@ roleRef:
   ```
 ### 04-pod.yaml
 ```yml
-  apiVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: nginx-pod
