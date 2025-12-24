@@ -47,6 +47,8 @@ spec:
     - podSelector:
         matchLabels:
           role: frontend
+    - ipBlock: # ADD THIS: Allows all external traffic to reach the pods
+        cidr: 0.0.0.0/0
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -71,7 +73,7 @@ roleRef:
   kind: Role 
   name: pod-log-reader
   apiGroup: rbac.authorization.k8s.io
-  ```
+```
 ### 04-pod.yaml
 ```yml
 apiVersion: v1
