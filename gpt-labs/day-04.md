@@ -125,3 +125,85 @@ spec:
 ```bash
 kubectl apply -f test-pod.yaml
 ```
+### 05-deployment.yaml
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: dev-team
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-deploy
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "60m"
+            memory: "68Mi"
+          limits:
+            cpu: "120m"
+            memory: "130Mi"
+```
+### 06-services.yaml
+```yml
+# 1. ClusterIP: Internal Use Only
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-internal
+  namespace: dev-team
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-deploy
+  ports:
+  - port: 80
+    targetPort: 80
+---
+# 2. NodePort: Exposed on every Node's IP at a specific port (30000-32767)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport
+  namespace: dev-team
+spec:
+  type: NodePort
+  selector:
+    app: nginx-deploy
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 32000
+---
+# 3. LoadBalancer: External IP (Status will stay <pending> if not on Cloud/MetalLB)
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-external
+  namespace: dev-team
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-deploy
+  ports:
+  - port: 80
+    targetPort: 80
+```
+```bash
+kubectl apply -f 05-deployment.yaml
+kubectl get rs -n dev-team
+kubectl get pods -n dev-team -l app=nginx-deploy
+kubectl apply -f 06-services.yaml
+kubectl get svc -n dev-team
+```
