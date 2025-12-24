@@ -103,3 +103,25 @@ kubectl apply -f 03-security.yaml
 # 4. Deploy the App
 kubectl apply -f 04-pod.yaml
 ```
+### test-pod.yml
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-fixed
+  namespace: dev-team
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      requests:
+        cpu: "70m"      # Higher than 60m min
+        memory: "80Mi"  # Higher than 68Mi min
+      limits:
+        cpu: "100m"     # Lower than 120m max
+        memory: "100Mi" # Lower than 130Mi max
+```
+```bash
+kubectl apply -f test-pod.yaml
+```
