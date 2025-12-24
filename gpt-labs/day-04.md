@@ -72,8 +72,8 @@ roleRef:
   name: pod-log-reader
   apiGroup: rbac.authorization.k8s.io
   ```
-  ### 04-pod.yaml
-  ```yml
+### 04-pod.yaml
+```yml
   apiVersion: v1
 kind: Pod
 metadata:
@@ -88,10 +88,9 @@ spec:
     resources:
       requests: { cpu: "60m", memory: "68Mi" }
       limits: { cpu: "120m", memory: "130Mi" }
-    ```
-
-### order of execution
 ```
+### order of execution
+```bash
 # 1. Create Namespace
 kubectl apply -f 01-namespace.yaml
 
